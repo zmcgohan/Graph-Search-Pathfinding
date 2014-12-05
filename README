@@ -1,0 +1,5 @@
+:.:.: Path Finder :.:.:
+
+This program represents a graph search method of finding a path from one point on a grid to another point.
+
+The grid is set up as a multi-dimensional array with None values as empty spaces, 0s as movable area and 1s as objects.
