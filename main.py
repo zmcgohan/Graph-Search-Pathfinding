@@ -19,3 +19,4 @@ if __name__ == '__main__':
 	print grid
 	path = Path(grid, (4,0), (4,5))
 	print path
+	grid.display_path(path)

@@ -31,3 +31,15 @@ class Grid:
 		if pos[1]+1 < len(self.grid[0]) and self.grid[pos[0]][pos[1]+1] == 0:
 			adjacent_positions.append((pos[0], pos[1]+1))
 		return adjacent_positions
+	def display_path(self, path):
+		"""Prints the grid with a path displayed with 8's."""
+		path_positions = set(path.path_positions)
+		display_str = ''
+		for row in xrange(len(self.grid)):
+			for col in xrange(len(self.grid[row])):
+				if (row, col) in path_positions: display_str += '8'
+				elif self.grid[row][col] is None: display_str += ' '
+				elif self.grid[row][col] == 1: display_str += '1'
+				elif self.grid[row][col] == 0: display_str += '0'
+			display_str += '\n'
+		print display_str
