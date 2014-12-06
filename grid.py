@@ -16,7 +16,8 @@ class Grid:
 		max_row_length = max([len(row) for row in grid_li])
 		for row in grid_li:
 			if len(row) < max_row_length:
-				row.append(None * (max_row_length - len(row)))
+				for i in xrange(max_row_length - len(row)):
+					row.append(None)
 		self.grid = tuple(tuple(row) for row in grid_li)
 	def __str__(self):
 		return '\n'.join([''.join([' ' if x is None else str(x) for x in row]) for row in self.grid])

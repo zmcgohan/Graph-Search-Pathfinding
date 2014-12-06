@@ -11,12 +11,13 @@ if __name__ == '__main__':
 
 	try:
 		grid = Grid(sys.argv[1])
+		print grid
 	except IOError as e:
 		print "Error reading {}: {}".format(sys.argv[1], e.strerror)
 		sys.exit(1)
 	except Exception as e:
 		print e
 	print grid
-	path = Path(grid, (4,0), (4,5))
+	path = Path(grid, (0,11), (1,13))
 	print path
 	grid.display_path(path)
