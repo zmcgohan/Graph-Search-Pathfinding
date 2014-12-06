@@ -1,3 +1,5 @@
+import random
+
 class Grid:
 	"""Represents a grid map stored in a tuple of tuples."""
 	def __init__(self, filename):
@@ -35,6 +37,7 @@ class Grid:
 	def display_path(self, path):
 		"""Prints the grid with a path displayed with 8's."""
 		path_positions = set(path.path_positions)
+		print "Path from {} to {}, length {}:".format(path.path_positions[0], path.path_positions[-1], len(path_positions))
 		display_str = ''
 		for row in xrange(len(self.grid)):
 			for col in xrange(len(self.grid[row])):
@@ -44,3 +47,13 @@ class Grid:
 				elif self.grid[row][col] == 0: display_str += '0'
 			display_str += '\n'
 		print display_str
+	def get_random_position(self):
+		"""Returns a random position where there is regular terrain."""
+		# make a list of all regular terrain positions in grid
+		regular_terrain = [(row, col) for row in xrange(len(self.grid)) for col in xrange(len(self.grid[row])) if self.grid[row][col] == 0]
+		return random.choice(regular_terrain)
+
+class RandomGrid(Grid):
+	"""Creates a random grid upon initialization. The dimensions are passed in to the constructor."""
+	def __init__(self, width, height, obj_rand = 4, space_rand = 4):
+		self.grid = tuple(tuple(None if random.randint(0,space_rand) == 0 else (1 if random.randint(0,obj_rand) == 0 else 0) for x in xrange(width)) for row in xrange(height))
