@@ -13,6 +13,8 @@ class PathNode:
 					str(self.parent.pos[0]), str(self.parent.pos[1]), str(self.pos[0]), str(self.pos[1]))
 		else:
 			return "None<-({},{})".format(self.pos[0], self.pos[1])
+	def __eq__(self, node2):
+		return self.pos == node2.pos
 	def get_initial(self):
 		initial_node = self
 		while initial_node.parent != None:
@@ -20,3 +22,5 @@ class PathNode:
 		return initial_node
 	def hashcode(self):
 		return "{},{}".format(*self.pos)
+	def __hash__(self):
+		return hash(self.pos)

@@ -1,5 +1,7 @@
 :.:.: Path Finder :.:.:
 
-This program represents a graph search method of finding a path from one point on a grid to another point.
+This program represents a graph search method and bidirectional search method of finding a path from one point on a grid to another point.
 
-The grid is set up as a multi-dimensional array with None values as empty spaces, 0s as movable area and 1s as objects.
+The grid is set up (in code) as a multi-dimensional array with None values as empty spaces, 0s as movable area and 1s as objects.
+
+Most of the time bidirectional search takes about half of the time as regular graph search, but sometimes it is a tiny bit slower. 
