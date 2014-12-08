@@ -5,16 +5,48 @@ from path_node import PathNode
 
 class Path:
 	def __init__(self, grid, init_pos, end_pos, method=0):
-		methods = ["Graph Search", "Bidirectional Graph Search"]
+		methods = ["Graph Search", "Bidirectional Graph Search", "Iterative Deepening Search"]
 		self.method = methods[method]
 		start_time = time.clock()
-		if method == 0:
+		if method == 0: # breadth-first graph search
 			end_node = self.__get_node_path(grid, init_pos, end_pos)
 			self.path_positions = self.__get_path_positions(end_node) if end_node is not None else None
-		elif method == 1:
+		elif method == 1: # bidirectional
 			end_nodes = self.__get_node_path_bidirectional(grid, init_pos, end_pos)
 			self.path_positions = self.__get_path_positions_bidirectional(end_nodes[0], end_nodes[1]) if end_nodes is not None else None
+		elif method == 2: # iterative deepening
+			end_node = self.__get_node_path_iterative_deepening(grid, init_pos, end_pos)
+			self.path_positions = self.__get_path_positions(end_node) if end_node is not None else None
 		self.time_taken = time.clock() - start_time
+	def __get_node_path_iterative_deepening(self, grid, init_pos, end_pos):
+		limit = 0
+		init_node = PathNode(init_pos)
+		end_node = PathNode(end_pos)
+		dls_search = self.__depth_limited_search(grid, init_node, end_node, limit) 
+		while dls_search is None:
+			limit += 1
+			dls_search = self.__depth_limited_search(grid, init_node, end_node, limit) 
+		if dls_search is not False:
+			return dls_search
+		return None
+	def __depth_limited_search(self, grid, cur_node, goal_node, limit):
+		if cur_node == goal_node: 
+			return cur_node
+		elif limit == 0:
+			return None
+		else:
+			cutoff_occurred = False
+			for pos in grid.get_adjacent_positions(cur_node.pos):
+				temp_node = PathNode(pos, cur_node)
+				temp_result = self.__depth_limited_search(grid, temp_node, goal_node, limit - 1)
+				if temp_result is None:
+					cutoff_occurred = True
+				elif temp_result is not False:
+					return temp_result
+			if cutoff_occurred:
+				return None
+			else:
+				return False
 	def __get_node_path(self, grid, init_pos, end_pos):
 		past_nodes = set()
 		init_node = PathNode(init_pos)
